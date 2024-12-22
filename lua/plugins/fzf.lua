@@ -1,5 +1,5 @@
 return {
-	"ibhagwan/fzf-lua",
+		"ibhagwan/fzf-lua",
 	-- optional for icon support
 	dependencies = { { "echasnovski/mini.icons", opts = {} } },
 	config = function()
@@ -8,7 +8,9 @@ return {
 		local wk = require("which-key")
 		wk.add({
 			{ "<leader>f", group = "Find" }, -- group
-			{ "<leader>ff", "<cmd>lua require('fzf-lua').files()<cr>", desc = "Find file" }, -- group
+			{ "<leader>ff", "<cmd>lua require('fzf-lua').files()<cr>", desc = "Find [f]ile" },
+			{ "<leader>fg", "<cmd>lua require('fzf-lua').grep()<cr>", desc = "Find [g]rep" },
+			{ "<leader><leader>", "<cmd>lua require('fzf-lua').buffers()<cr>", desc = "Find [b]uffers" },
 		})
 	end,
 }
