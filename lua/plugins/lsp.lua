@@ -1,10 +1,10 @@
-local function biome_lsp_or_prettier(bufnr)
-	local has_biome_lsp = vim.lsp.get_clients({
-		bufnr = bufnr,
-		name = "biome",
-	})[1]
-	if has_biome_lsp then
-		return {}
+local function biome_or_prettier()
+	local has_biome = vim.fs.find({
+		"biome.json",
+	}, { upward = true })[1]
+	print("has_biome", has_biome)
+	if has_biome then
+		return { "biome" }
 	end
 	local has_prettier = vim.fs.find({
 		-- https://prettier.io/docs/en/configuration.html
@@ -21,23 +21,6 @@ local function biome_lsp_or_prettier(bufnr)
 	}, { upward = true })[1]
 	if has_prettier then
 		return { "prettier" }
-	end
-	return { "biome" }
-end
-
-local function biome_lsp_or_eslint(bufnr)
-	local has_biome_lsp = vim.lsp.get_clients({
-		bufnr = bufnr,
-		name = "biome",
-	})[1]
-	if has_biome_lsp then
-		return {}
-	end
-	local has_eslint = vim.fs.find({
-		".eslintrc.json",
-	}, { upward = true })[1]
-	if has_eslint then
-		return { "eslint_d" }
 	end
 	return { "biome" }
 end
@@ -84,10 +67,10 @@ return {
 		---@type conform.setupOpts
 		opts = {
 			formatters_by_ft = {
-				javascript = biome_lsp_or_prettier,
-				typescript = biome_lsp_or_prettier,
-				javascriptreact = biome_lsp_or_prettier,
-				typescriptreact = biome_lsp_or_prettier,
+				javascript = biome_or_prettier,
+				typescript = biome_or_prettier,
+				javascriptreact = biome_or_prettier,
+				typescriptreact = biome_or_prettier,
 				json = { "biome" },
 				jsonc = { "biome" },
 				lua = { "stylua" },
@@ -98,13 +81,22 @@ return {
 	{
 		"williamboman/mason.nvim",
 		cmd = "Mason",
-		opts = {
-			ensure_installed = { "biome", "eslint_d", "prettier" },
-		},
+		config = function()
+			require("mason").setup()
+		end,
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
-		opts = {},
+		config = function()
+			local mason_lspconfig = require("mason-lspconfig")
+
+			mason_lspconfig.setup({
+				ensure_installed = { "lua_ls", "biome", "vtsls" },
+			})
+
+			mason_lspconfig.setup_handlers(handlers)
+		end,
+		-- opts = {},
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -112,39 +104,78 @@ return {
 
 		config = function()
 			local lspconfig = require("lspconfig")
-			local mason_lspconfig = require("mason-lspconfig")
-
-			mason_lspconfig.setup()
-
-			mason_lspconfig.setup_handlers(handlers)
+			lspconfig.lua_ls.setup({})
+			lspconfig.vtsls.setup({})
+			lspconfig.biome.setup({})
+			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 		end,
 	},
 	{
 		"mfussenegger/nvim-lint",
-		event = "VeryLazy",
-		opts = {
-			-- Event to trigger linters
-			events = { "BufWritePost", "BufReadPost", "InsertLeave" },
-			linters_by_ft = {
-				fish = { "fish" },
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			local lint = require("lint")
 
-				javascript = biome_lsp_or_eslint,
-				typescript = biome_lsp_or_eslint,
-				javascriptreact = biome_lsp_or_eslint,
-				typescriptreact = biome_lsp_or_eslint,
-				json = { "biome" },
-				jsonc = { "biome" },
+			-- Pre-configure linters
+			local function get_linter_config()
+				local has_biome = vim.fs.find({
+					"biome.json",
+				}, { upward = true })[1]
+
+				if has_biome then
+					return { "biome" }
+				end
+
+				local has_eslint = vim.fs.find({
+					".eslintrc.json",
+				}, { upward = true })[1]
+
+				if has_eslint then
+					return { "eslint_d" }
+				end
+
+				return { "biome" } -- default fallback
+			end
+
+			-- Set up initial linter configuration
+			local active_linters = get_linter_config()
+			lint.linters_by_ft = {
+				javascript = active_linters,
+				typescript = active_linters,
+				javascriptreact = active_linters,
+				typescriptreact = active_linters,
+				json = { "jsonlint" },
 				-- Use the "*" filetype to run linters on all filetypes.
 				-- ['*'] = { 'global linter' },
 				-- Use the "_" filetype to run linters on filetypes that don't have other linters configured.
 				-- ['_'] = { 'fallback linter' },
 				-- ["*"] = { "typos" },
-			},
-		},
-		config = function() end,
+			}
+
+			-- Create an autocmd group for lint
+			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+
+			-- Create autocmd to trigger linting
+			vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+				group = lint_augroup,
+				callback = function()
+					lint.try_lint()
+				end,
+			})
+
+			vim.keymap.set("n", "<leader>ll", function()
+				lint.try_lint()
+			end, { desc = "lint file" })
+		end,
 	},
 	{
 		"rshkarin/mason-nvim-lint",
-		opts = {},
+		config = function()
+			local mason_nvim_lint = require("mason-nvim-lint")
+			mason_nvim_lint.setup({
+				ignore_install = { "vale", "tflint", "hadolint", "clj-kondo", "ruby", "inko", "janet" },
+				ensure_installed = { "eslint_d", "biome", "jsonlint" },
+			})
+		end,
 	},
 }
