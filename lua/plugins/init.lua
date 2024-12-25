@@ -1,4 +1,3 @@
-print("lua/plugins/init.lua")
 return {
 
 	{ lazy = true, "nvim-lua/plenary.nvim" },
@@ -43,6 +42,8 @@ return {
 					SnacksDashboardDesc = { fg = colors.orange },
 					SnacksDashboardTitle = { fg = colors.orange },
 					SnacksDashboardHeader = { fg = colors.aqua },
+					BlinkCmpKind = { fg = colors.aqua },
+					BlinkCmpMenuSelection = { bg = colors.gray },
 				}
 			end,
 		},
@@ -61,5 +62,9 @@ return {
 		config = function()
 			require("plugins.configs.treesitter")
 		end,
+	},
+
+	{
+		"nvim-treesitter/playground",
 	},
 }

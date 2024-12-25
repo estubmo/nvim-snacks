@@ -106,7 +106,11 @@ return {
 			lspconfig.lua_ls.setup({})
 			lspconfig.vtsls.setup({})
 			lspconfig.biome.setup({})
-			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+
+			vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<cr>", { desc = "Go to references" })
+			vim.keymap.set("n", "gy", "<cmd>FzfLua lsp_typedefs<cr>", { desc = "Go to type definition" })
+			vim.keymap.set("n", "<Leader>fs", "<cmd>FzfLua lsp_document_symbols<cr>", { desc = "Document symbols" })
+			vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
 		end,
 	},
 	{
@@ -173,8 +177,27 @@ return {
 					lint.try_lint()
 				end,
 			})
-
-			vim.keymap.set("n", "<leader>ll", function()
+			-- maps.n["<Leader>la"] =
+			--     { function() vim.lsp.buf.code_action() end, desc = "LSP code action", cond = "textDocument/codeAction" }
+			--   maps.x["<Leader>la"] =
+			--     { function() vim.lsp.buf.code_action() end, desc = "LSP code action", cond = "textDocument/codeAction" }
+			--   maps.n["<Leader>lA"] = {
+			--     function() vim.lsp.buf.code_action { context = { only = { "source" }, diagnostics = {} } } end,
+			--     desc = "LSP source action",
+			--     cond = "textDocument/codeAction",
+			--   }
+			vim.keymap.set({ "n", "v" }, "<Leader>la", function()
+				require("fzf-lua").lsp_code_actions({
+					winopts = {
+						relative = "cursor",
+						width = 0.6,
+						height = 0.6,
+						row = 1,
+						preview = { vertical = "up:70%" },
+					},
+				})
+			end, { desc = "LSP code action" })
+			vim.keymap.set("n", "<Leader>ll", function()
 				lint.try_lint()
 			end, { desc = "Trigger linting for current file" })
 		end,
