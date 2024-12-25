@@ -95,7 +95,6 @@ return {
 
 			mason_lspconfig.setup_handlers(handlers)
 		end,
-		-- opts = {},
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -111,7 +110,7 @@ return {
 			vim.keymap.set("n", "gy", "<cmd>FzfLua lsp_typedefs<cr>", { desc = "Go to type definition" })
 			vim.keymap.set("n", "<Leader>fs", "<cmd>FzfLua lsp_document_symbols<cr>", { desc = "Document symbols" })
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
-			vim.keymap.set("n", "<Leader>la", function()
+			vim.keymap.set("n", "<Leader>ld", function()
 				vim.diagnostic.open_float(0, { scope = "line" })
 			end, { desc = "Line diagnostics" })
 			vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
@@ -208,6 +207,9 @@ return {
 					},
 				})
 			end, { desc = "LSP code action" })
+			vim.keymap.set("n", "<Leader>lA", function()
+				vim.lsp.buf.code_action({ context = { only = { "source" }, diagnostics = {} } })
+			end, { desc = "LSP source action" })
 			vim.keymap.set("n", "<Leader>ll", function()
 				lint.try_lint()
 			end, { desc = "Trigger linting for current file" })
