@@ -37,6 +37,12 @@ return {
 					DiagnosticUnderlineInfo = { sp = colors.blue, undercurl = true },
 					DiagnosticUnderlineWarn = { sp = colors.yellow, undercurl = true },
 					DiagnosticUnderlineOk = { sp = colors.green, undercurl = true },
+					SnacksIndentScope = { fg = colors.aqua },
+					SnacksDashboardKey = { fg = colors.aqua },
+					SnacksDashboardIcon = { fg = colors.aqua },
+					SnacksDashboardDesc = { fg = colors.orange },
+					SnacksDashboardTitle = { fg = colors.orange },
+					SnacksDashboardHeader = { fg = colors.aqua },
 				}
 			end,
 		},

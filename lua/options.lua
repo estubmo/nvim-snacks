@@ -13,6 +13,7 @@ o.laststatus = 3 -- global statusline
 o.showmode = false
 
 o.clipboard = "unnamedplus"
+o.shell = "/bin/bash"
 
 -- Indenting
 o.expandtab = true
