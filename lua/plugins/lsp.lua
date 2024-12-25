@@ -187,15 +187,6 @@ return {
 					lint.try_lint()
 				end,
 			})
-			-- maps.n["<Leader>la"] =
-			--     { function() vim.lsp.buf.code_action() end, desc = "LSP code action", cond = "textDocument/codeAction" }
-			--   maps.x["<Leader>la"] =
-			--     { function() vim.lsp.buf.code_action() end, desc = "LSP code action", cond = "textDocument/codeAction" }
-			--   maps.n["<Leader>lA"] = {
-			--     function() vim.lsp.buf.code_action { context = { only = { "source" }, diagnostics = {} } } end,
-			--     desc = "LSP source action",
-			--     cond = "textDocument/codeAction",
-			--   }
 			vim.keymap.set({ "n", "v" }, "<Leader>la", function()
 				require("fzf-lua").lsp_code_actions({
 					winopts = {

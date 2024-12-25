@@ -65,6 +65,7 @@ return {
 					fzf = {
 						["alt-s"] = "toggle",
 						["alt-a"] = "toggle-all",
+						["ctrl-q"] = "select-all+accept",
 					},
 				},
 				winopts = {
@@ -106,8 +107,15 @@ return {
 				},
 				oldfiles = {
 					include_current_session = true,
+					cwd_only = true,
+					stat_file = true,
 					winopts = {
 						preview = { hidden = "hidden" },
+					},
+				},
+				previewers = {
+					builtin = {
+						syntax_limit_b = 1024 * 100,
 					},
 				},
 			}
