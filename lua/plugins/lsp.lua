@@ -2,7 +2,6 @@ local function biome_or_prettier()
 	local has_biome = vim.fs.find({
 		"biome.json",
 	}, { upward = true })[1]
-	print("has_biome", has_biome)
 	if has_biome then
 		return { "biome" }
 	end
@@ -127,7 +126,19 @@ return {
 				end
 
 				local has_eslint = vim.fs.find({
+					-- https://eslint.org/docs/latest/use/configure/configuration-files
+					-- https://eslint.org/docs/latest/use/configure/configuration-files-deprecated
 					".eslintrc.json",
+					".eslintrc.js",
+					".eslintrc.cjs",
+					".eslintrc.yaml",
+					".eslintrc.yml",
+					"eslint.config.js",
+					"eslint.config.mjs",
+					"eslint.config.cjs",
+					"eslint.config.ts ",
+					"eslint.config.mts",
+					"eslint.config.cts",
 				}, { upward = true })[1]
 
 				if has_eslint then
@@ -156,7 +167,7 @@ return {
 			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
 			-- Create autocmd to trigger linting
-			vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+			vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" }, {
 				group = lint_augroup,
 				callback = function()
 					lint.try_lint()
@@ -165,7 +176,7 @@ return {
 
 			vim.keymap.set("n", "<leader>ll", function()
 				lint.try_lint()
-			end, { desc = "lint file" })
+			end, { desc = "Trigger linting for current file" })
 		end,
 	},
 	{
