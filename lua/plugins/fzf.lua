@@ -18,7 +18,7 @@ return {
 				end,
 				desc = "Grep current buffer",
 			},
-			{ "<leader><leader>", "<cmd>FzfLua buffer<cr>", desc = "Find buffers" },
+			{ "<leader><leader>", "<cmd>FzfLua buffers<cr>", desc = "Find buffers" },
 			{ "<leader>fC", "<cmd>FzfLua commands<cr>", desc = "Find commands" },
 			{ "<leader>fD", "<cmd>FzfLua lsp_workspace_diagnostics<cr>", desc = "Workspace diagnostics" },
 			{ "<leader>fc", "<cmd>FzfLua highlights<cr>", desc = "Find highlights" },
