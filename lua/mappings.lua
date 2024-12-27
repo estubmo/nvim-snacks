@@ -34,6 +34,10 @@ map("n", "<leader>bf", "<cmd>bfirst<CR>", { desc = "First buffer" })
 map("n", "<leader>bl", "<cmd>blast<CR>", { desc = "Last buffer" })
 map("n", "<C-q>", "<cmd>q<CR>", { desc = "Close current window" })
 
+-- alternate file switching
+map("n", "<Tab>", "<C-^>", { desc = "Switch to alternate file" })
+map("n", "<BS>", "<cmd>vsplit #<CR>", { desc = "Open alternate file in split" })
+
 -- LSP mappings
 map("n", "gD", function()
 	vim.lsp.buf.declaration()
