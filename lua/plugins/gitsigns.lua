@@ -76,6 +76,9 @@ return {
 					end
 				end, { desc = "Next git hunk" })
 
+				map("n", "]G", function()
+					gitsigns.nav_hunk("last")
+				end, { desc = "Last git hunk" })
 				map("n", "[g", function()
 					if vim.wo.diff then
 						vim.cmd.normal({ "[c", bang = true })
@@ -83,6 +86,10 @@ return {
 						gitsigns.nav_hunk("prev")
 					end
 				end, { desc = "Previous git hunk" })
+
+				map("n", "[G", function()
+					gitsigns.nav_hunk("first")
+				end, { desc = "First git hunk" })
 
 				-- Actions
 				map("n", "<leader>gs", gitsigns.stage_hunk, { desc = "Stage hunk" })
