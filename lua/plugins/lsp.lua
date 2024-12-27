@@ -1,6 +1,7 @@
 local function biome_or_prettier()
 	local has_biome = vim.fs.find({
 		"biome.json",
+		"biome.jsonc",
 	}, { upward = true })[1]
 	if has_biome then
 		return { "biome" }
@@ -98,13 +99,25 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
+		dependencies = { "saghen/blink.cmp" },
 		event = { "BufReadPre", "BufNewFile" },
 
-		config = function()
+		opts = {
+			servers = {
+				lua_ls = {},
+				vtsls = {},
+				biome = {},
+			},
+		},
+
+		config = function(_, opts)
 			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup({})
-			lspconfig.vtsls.setup({})
-			lspconfig.biome.setup({})
+			for server, config in pairs(opts.servers) do
+				-- passing config.capabilities to blink.cmp merges with the capabilities in your
+				-- `opts[server].capabilities, if you've defined it
+				config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+				lspconfig[server].setup(config)
+			end
 
 			vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<cr>", { desc = "Go to references" })
 			vim.keymap.set("n", "gy", "<cmd>FzfLua lsp_typedefs<cr>", { desc = "Go to type definition" })
@@ -133,10 +146,11 @@ return {
 			local function get_linter_config()
 				local has_biome = vim.fs.find({
 					"biome.json",
+					"biome.jsonc",
 				}, { upward = true })[1]
 
 				if has_biome then
-					return { "biome" }
+					return { "biomejs" }
 				end
 
 				local has_eslint = vim.fs.find({
@@ -211,8 +225,10 @@ return {
 		config = function()
 			local mason_nvim_lint = require("mason-nvim-lint")
 			mason_nvim_lint.setup({
+				automatic_installation = true,
 				ignore_install = { "vale", "tflint", "hadolint", "clj-kondo", "ruby", "inko", "janet" },
 				ensure_installed = { "eslint_d", "biome", "jsonlint" },
+				quiet_mode = false,
 			})
 		end,
 	},

@@ -11,7 +11,7 @@ return {
 		-- elsewhere in your config, without redefining it, due to `opts_extend`
 		-- remember to enable your providers here
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer", "copilot", "dadbod", "codecompanion" },
+			default = { "lazydev", "lsp", "path", "snippets", "buffer", "copilot", "dadbod", "codecompanion" },
 			cmdline = function()
 				local type = vim.fn.getcmdtype()
 				-- Search forward and backward
@@ -26,6 +26,12 @@ return {
 			end,
 
 			providers = {
+				lazydev = {
+					name = "LazyDev",
+					module = "lazydev.integrations.blink",
+					-- make lazydev completions top priority (see `:h blink.cmp`)
+					score_offset = 100,
+				},
 				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 				copilot = {
 					name = "copilot",
@@ -65,6 +71,9 @@ return {
 		},
 		keymap = {
 			preset = "enter",
+		},
+		fuzzy = {
+			use_frecency = true,
 		},
 		appearance = {
 			nerd_font_variant = "mono",
@@ -137,6 +146,7 @@ return {
 			},
 		},
 		signature = {
+			enabled = true,
 			window = {
 				border = "none",
 				-- winhighlight = "Normal:NormalFloat",
