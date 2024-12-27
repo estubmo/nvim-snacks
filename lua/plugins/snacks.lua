@@ -212,14 +212,22 @@ return {
 			desc = "Notification History",
 		},
 		{
-			"<leader>bd",
+			"<leader>c",
 			function()
 				Snacks.bufdelete()
 			end,
 			desc = "Delete Buffer",
 		},
 		{
-			"<leader>cR",
+			"<leader>bc",
+			function(opts)
+				---@param opts? snacks.bufdelete.Opts
+				Snacks.bufdelete.other(opts)
+			end,
+			desc = "Delete other buffers",
+		},
+		{
+			"<leader>lR",
 			function()
 				Snacks.rename.rename_file()
 			end,
