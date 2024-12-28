@@ -18,5 +18,8 @@ return {
 		vim.keymap.set("n", "<leader>wj", require("smart-splits").swap_buf_down)
 		vim.keymap.set("n", "<leader>wk", require("smart-splits").swap_buf_up)
 		vim.keymap.set("n", "<leader>wl", require("smart-splits").swap_buf_right)
+		-- create splits
+		vim.keymap.set("n", "<leader>wv", "<cmd>vs<CR>")
+		vim.keymap.set("n", "<leader>ws", "<cmd>sp<CR>")
 	end,
 }
