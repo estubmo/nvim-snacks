@@ -6,12 +6,6 @@ map("i", "jk", "<ESC>")
 map("i", "jj", "<ESC>") -- TODO: Exchange for betterjj
 map("n", "<C-c>", "<cmd> %y+ <CR>") -- copy whole filecontent
 
--- window navigation
-map("n", "<C-h>", "<C-w>h", { desc = "Navigate to left window" })
-map("n", "<C-j>", "<C-w>j", { desc = "Navigate to bottom window" })
-map("n", "<C-k>", "<C-w>k", { desc = "Navigate to top window" })
-map("n", "<C-l>", "<C-w>l", { desc = "Navigate to right window" })
-
 -- move lines
 map("v", "<M-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 map("v", "<M-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection up" })
@@ -38,6 +32,25 @@ map("n", "<C-q>", "<cmd>q<CR>", { desc = "Close current window" })
 map("n", "<Tab>", "<C-^>", { desc = "Switch to alternate file" })
 map("n", "<BS>", "<cmd>vsplit #<CR>", { desc = "Open alternate file in split" })
 
+-- -- Add this to your statusline configuration
+-- -- If you're using lualine, add this component:
+-- local function alternate_file()
+--     local alt_file = vim.fn.expand('#:t')
+--     if alt_file == '' then
+--         return ''
+--     end
+--     return '⟺ ' .. alt_file
+-- end
+--
+-- -- Example lualine config (adjust according to your setup):
+-- require('lualine').setup({
+--     sections = {
+--         lualine_x = {
+--             alternate_file,
+--             -- your other components...
+--         }
+--     }
+-- })
 -- LSP mappings
 map("n", "gD", function()
 	vim.lsp.buf.declaration()
