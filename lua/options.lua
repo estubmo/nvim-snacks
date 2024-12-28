@@ -3,9 +3,7 @@ local o = vim.o
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- vim.wo.relativenumber = true
--- vim.wo.number = true
-
+-- line numbers
 o.relativenumber = true
 o.number = true
 
@@ -44,6 +42,9 @@ o.hlsearch = false
 o.incsearch = true
 
 o.scrolloff = 10
+vim.diagnostic.config({
+	virtual_text = false,
+})
 -- add binaries installed by mason.nvim to path
 local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
 vim.env.PATH = vim.env.PATH .. (is_windows and ";" or ":") .. vim.fn.stdpath("data") .. "/mason/bin"
