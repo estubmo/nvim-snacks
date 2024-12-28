@@ -16,14 +16,24 @@ return {
 			for _, client in pairs(clients) do
 				table.insert(c, client.name)
 			end
-			return " " .. table.concat(c, " | ")
+			return " " .. table.concat(c, ", ")
+		end
+
+		-- Add this to your statusline configuration
+		-- If you're using lualine, add this component:
+		local function alternate_file()
+			local alt_file = vim.fn.expand("#:t")
+			if alt_file == "" then
+				return ""
+			end
+			return "⟺  " .. alt_file
 		end
 
 		local config = {
 			options = {
 				icons_enabled = true,
 				theme = "auto",
-				component_separators = { left = "", right = "" },
+				component_separators = { left = "", right = "|" },
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
 					statusline = {},
@@ -45,7 +55,7 @@ return {
 				-- lualine_c = { "clients_lsp", "diagnostics" },
 
 				lualine_b = { "branch", "diff", "diagnostics" },
-				lualine_c = { "filename" },
+				lualine_c = { "filename", alternate_file },
 
 				lualine_x = { clients_lsp, "encoding", "fileformat", "filetype" },
 				lualine_y = { "progress" },
