@@ -22,9 +22,6 @@ return {
 			},
 		})
 
-		local wk = require("which-key")
-		wk.add({
-			{ "<leader>o", "<cmd>Oil<cr>", desc = "Open parent directory" },
-		})
+		vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory" })
 	end,
 }
