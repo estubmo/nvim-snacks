@@ -2,13 +2,7 @@ local map = vim.keymap.set
 
 -- general mappings
 map("n", "<C-s>", "<cmd> w <CR>")
-map("i", "jk", "<ESC>")
-map("i", "jj", "<ESC>") -- TODO: Exchange for betterjj
 map("n", "<C-c>", "<cmd> %y+ <CR>") -- copy whole filecontent
-
--- move lines
-map("v", "<M-k>", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
-map("v", "<M-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection up" })
 
 map("n", "J", "mzJ`z", { desc = "Join lines" })
 map("x", "<leader>p", '"_dP', { desc = "Paste and delete selection into void register" }) -- greatest remap ever
@@ -32,25 +26,6 @@ map("n", "<C-q>", "<cmd>q<CR>", { desc = "Close current window" })
 map("n", "<Tab>", "<C-^>", { desc = "Switch to alternate file" })
 map("n", "<BS>", "<cmd>vsplit #<CR>", { desc = "Open alternate file in split" })
 
--- -- Add this to your statusline configuration
--- -- If you're using lualine, add this component:
--- local function alternate_file()
---     local alt_file = vim.fn.expand('#:t')
---     if alt_file == '' then
---         return ''
---     end
---     return '⟺ ' .. alt_file
--- end
---
--- -- Example lualine config (adjust according to your setup):
--- require('lualine').setup({
---     sections = {
---         lualine_x = {
---             alternate_file,
---             -- your other components...
---         }
---     }
--- })
 -- LSP mappings
 map("n", "gD", function()
 	vim.lsp.buf.declaration()

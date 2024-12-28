@@ -4,7 +4,7 @@ return {
 	config = function()
 		local wk = require("which-key")
 		-- Register which-key group
-		wk.register({
+		wk.add({
 			["<leader>g"] = { name = "+git" },
 			["<leader>ug"] = { name = "+gitsigns" },
 		})

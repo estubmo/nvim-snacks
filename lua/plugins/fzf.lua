@@ -77,7 +77,7 @@ return {
 						vertical = "up:40%",
 					},
 				},
-				global_git_icons = false,
+				global_git_icons = true,
 				-- Configuration for specific commands.
 				files = {
 					winopts = {
