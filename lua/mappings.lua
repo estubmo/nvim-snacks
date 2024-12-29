@@ -20,7 +20,9 @@ map("n", "<leader>]b", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<leader>[b", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 map("n", "<leader>bf", "<cmd>bfirst<CR>", { desc = "First buffer" })
 map("n", "<leader>bl", "<cmd>blast<CR>", { desc = "Last buffer" })
-map("n", "<C-q>", "<cmd>q<CR>", { desc = "Close current window" })
+map("n", "<C-q>", "<cmd>confirm q<CR>", { desc = "Quit window" })
+map("n", "<C-Q>", "<cmd>q!<CR>", { desc = "Force quit" })
+map("n", "<leader>q", "<cmd>confirm qall<CR>", { desc = "Quit" })
 
 -- alternate file switching
 map("n", "<Tab>", "<C-^>", { desc = "Switch to alternate file" })
