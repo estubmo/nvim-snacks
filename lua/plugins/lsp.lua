@@ -92,6 +92,7 @@ return {
 
 			mason_lspconfig.setup({
 				ensure_installed = { "lua_ls", "biome", "vtsls" },
+				automatic_installation = true,
 			})
 
 			mason_lspconfig.setup_handlers(handlers)
@@ -151,15 +152,6 @@ return {
 
 			-- Pre-configure linters
 			local function get_linter_config()
-				local has_biome = vim.fs.find({
-					"biome.json",
-					"biome.jsonc",
-				}, { upward = true })[1]
-
-				if has_biome then
-					return { "biomejs" }
-				end
-
 				local has_eslint = vim.fs.find({
 					-- https://eslint.org/docs/latest/use/configure/configuration-files
 					-- https://eslint.org/docs/latest/use/configure/configuration-files-deprecated
@@ -180,7 +172,7 @@ return {
 					return { "eslint_d" }
 				end
 
-				return { "biome" } -- default fallback
+				return {} -- default fallback
 			end
 
 			-- Set up initial linter configuration
@@ -234,7 +226,7 @@ return {
 			mason_nvim_lint.setup({
 				automatic_installation = true,
 				ignore_install = { "vale", "tflint", "hadolint", "clj-kondo", "ruby", "inko", "janet" },
-				ensure_installed = { "eslint_d", "biome", "jsonlint" },
+				ensure_installed = { "eslint_d", "jsonlint" },
 				quiet_mode = false,
 			})
 		end,
