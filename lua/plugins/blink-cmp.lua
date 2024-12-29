@@ -70,7 +70,7 @@ return {
 			},
 		},
 		keymap = {
-			preset = "enter",
+			preset = "default",
 		},
 		fuzzy = {
 			use_frecency = true,
