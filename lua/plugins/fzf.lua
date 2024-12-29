@@ -24,7 +24,6 @@ return {
 			{ "<leader>fc", "<cmd>FzfLua highlights<cr>", desc = "Find highlights" },
 			{ "<leader>fd", "<cmd>FzfLua lsp_document_diagnostics<cr>", desc = "Document diagnostics" },
 			{ "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find files" },
-			{ "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find files" },
 			{ "<leader>fg", "<cmd>FzfLua git_status<cr>", desc = "Find git" },
 			{ "<leader>fh", "<cmd>FzfLua help_tags<cr>", desc = "Help" },
 			{ "<leader>fk", "<cmd>FzfLua keymaps<cr>", desc = "Find keymaps" },
@@ -80,9 +79,6 @@ return {
 				global_git_icons = true,
 				-- Configuration for specific commands.
 				files = {
-					winopts = {
-						preview = { hidden = "hidden" },
-					},
 					actions = {
 						["ctrl-g"] = actions.toggle_ignore,
 					},
