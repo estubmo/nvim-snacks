@@ -44,7 +44,7 @@ return {
 						desc = "Config",
 						action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
 					},
-					{ icon = " ", key = "s", desc = "Restore Session", section = "session" },
+					{ icon = " ", key = "s", desc = "Restore Session", action = ":SessionRestore " },
 					{
 						icon = "󰒲 ",
 						key = "L",
@@ -164,6 +164,7 @@ return {
 		notifier = {
 			enabled = true,
 			timeout = 3000,
+			margin = { top = 1, right = 1, bottom = 0 },
 		},
 		quickfile = { enabled = true },
 		scroll = { enabled = true },
