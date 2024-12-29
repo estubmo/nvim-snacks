@@ -134,6 +134,13 @@ return {
 			vim.keymap.set("n", "]e", function()
 				vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
 			end, { desc = "Next error" })
+
+			local symbols = { Error = "󰅙", Info = "󰋼", Hint = "󰌵", Warn = "" }
+
+			for name, icon in pairs(symbols) do
+				local hl = "DiagnosticSign" .. name
+				vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
+			end
 		end,
 	},
 	{
