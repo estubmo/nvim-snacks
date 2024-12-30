@@ -1,6 +1,7 @@
 return {
 	"lewis6991/gitsigns.nvim",
 	enabled = vim.fn.executable("git") == 1,
+	dependencies = { "petertriho/nvim-scrollbar" },
 	config = function()
 		local wk = require("which-key")
 		-- Register which-key group
@@ -119,5 +120,6 @@ return {
 				map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select hunk" })
 			end,
 		})
+		require("scrollbar.handlers.gitsigns").setup()
 	end,
 }
