@@ -127,6 +127,8 @@ return {
 			vim.keymap.set("n", "<Leader>ld", function()
 				vim.diagnostic.open_float(0, { scope = "line" })
 			end, { desc = "Line diagnostics" })
+			--rename symbol
+			vim.keymap.set("n", "<Leader>lr", vim.lsp.buf.rename, { desc = "Rename symbol" })
 			vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
 			vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 			vim.keymap.set("n", "[e", function()
