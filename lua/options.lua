@@ -1,7 +1,7 @@
 local o = vim.o
 
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = " "
 
 -- line numbers
 o.relativenumber = true
@@ -38,8 +38,7 @@ o.timeoutlen = 400
 o.undofile = true
 o.cursorline = true
 
-o.hlsearch = false
-o.incsearch = true
+o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 o.scrolloff = 10
 vim.diagnostic.config({
