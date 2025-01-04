@@ -178,6 +178,13 @@ return {
 	},
 	keys = {
 		{
+			"<leader>d",
+			function()
+				Snacks.dashboard.open()
+			end,
+			desc = "Open Dashboard",
+		},
+		{
 			"<leader>z",
 			function()
 				Snacks.zen()
