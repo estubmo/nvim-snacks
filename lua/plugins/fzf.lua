@@ -72,11 +72,11 @@ return {
 					width = 0.55,
 					preview = {
 						scrollbar = false,
-						layout = "vertical",
+						layout = "flex",
 						vertical = "up:40%",
 					},
 				},
-				global_git_icons = true,
+				-- global_git_icons = true,
 				-- Configuration for specific commands.
 				files = {
 					actions = {
