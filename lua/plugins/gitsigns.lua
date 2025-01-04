@@ -6,8 +6,8 @@ return {
 		local wk = require("which-key")
 		-- Register which-key group
 		wk.add({
-			["<leader>g"] = { name = "+git" },
-			["<leader>ug"] = { name = "+gitsigns" },
+			{ "<leader>g", group = "Git" },
+			{ "<leader>ug", group = "Gitsigns" },
 		})
 
 		require("gitsigns").setup({
